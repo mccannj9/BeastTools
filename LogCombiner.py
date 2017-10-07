@@ -6,6 +6,16 @@ def blocks(files, size=65536):
         if not b: break
         yield b
 
+def count_samples(filename):
+    f = open(filename)
+    lines = 0
+    hashes = 0
+    for bl in blocks(f):
+        lines += bl.count("\n")
+        hashes += bl.count("#")
+    f.close()
+    # exclude header and initial state, hence -2
+    return lines-hashes-2
 
 def main():
     import argparse as ap
@@ -22,16 +32,10 @@ def main():
     )
     args = parser.parse_args()
 
+
     for log in args.logs:
-        lines = 0
-        hashes = 0
-        f = open(log)
-        for bl in blocks(f):
-            lines += bl.count("\n")
-            hashes += bl.count("#")
-        f.close()
-    samples = lines-hashes-1
-    print(lines, hashes, samples)
+        samples = count_samples(log)
+        print(samples)
 
 
 if __name__ == '__main__':
