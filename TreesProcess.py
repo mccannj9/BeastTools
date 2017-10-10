@@ -3,25 +3,26 @@
 from argparse import ArgumentParser, FileType
 from sys import argv, exit
 
-import Graph
-import Parser
+from TreeTools import Graph, Parser
+# import Graph
+# import Parser
 
-from Parser import thin_items
+from TreeTools.Parser import thin_items
 
 
 def formatNewick(graphs, outfile):
 
     for graph in graphs:
-        outfile.write(graph.getNewick() + "\n")
-
+        # outfile.write(graph.getNewick() + "\n")
+        print(graph.getNewick(), file=outfile)
 
 def formatNEXUS(graphs, outfile):
     outfile.write("#nexus\n")
     outfile.write("begin trees;\n")
     for i,graph in enumerate(graphs):
-        # outfile.write("tree TREE_" + str(i) + " = " + graph.getNewick() + "\n")
         print("tree TREE_" + str(i) + " = " + graph.getNewick(), file=outfile)
-    outfile.write("end;\n")
+    print("end;", file=outfile)
+    # outfile.write("end;\n")
 
 
 def formatExpoTree(graphs, outfile):

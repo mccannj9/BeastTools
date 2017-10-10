@@ -1,6 +1,9 @@
 import re
 import sys
-from Graph import Node, Graph
+
+from TreeTools.Graph import Node, Graph
+
+# from Graph import Node, Graph
 
 class ParseError(Exception):
     def __init__(self, value):
