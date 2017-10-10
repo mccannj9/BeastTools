@@ -450,3 +450,31 @@ def readFile(fh, debug=False, afTrait=None, graphNum=None):
 
     fh.close()
     return graphs
+
+def thin_items(graphs_list, thin_number, burnin):
+
+    from math import ceil
+    print("thinning!")
+    if thin_number > len(graphs_list):
+        print("Resample # must be < # trees")
+        return 1
+
+    if thin_number == 0:
+        print("Not thinning trees, thin=0")
+
+    sample_rate = ceil((len(graphs_list) - burnin) / thin_number)
+
+    print(sample_rate)
+
+    graphs_list = graphs_list[burnin:]
+    print("%s trees after burnin" % len(graphs_list)) 
+
+    new = [
+        graphs_list[x] for x in range(
+            0, len(graphs_list), sample_rate
+        )
+    ]
+
+    print(len(new))
+
+    return new
